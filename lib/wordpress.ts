@@ -16,6 +16,7 @@ type WordPressProduct = {
   title: string;
   excerpt: string;
   image: WordPressImage | null;
+  gallery?: WordPressImage[];
   featured: boolean;
   categories: WordPressTerm[];
   specifications: Record<string, string | number | boolean>;
@@ -32,6 +33,12 @@ function cleanText(value: string) {
 function mapProduct(item: WordPressProduct, index: number): Product {
   const fallback = fallbackProducts.find(product => product.slug === item.slug);
   const specs = item.specifications || {};
+  const mapImage = (image: WordPressImage) => ({
+    url: image.url,
+    alt: cleanText(image.alt) || cleanText(item.title),
+    width: image.width,
+    height: image.height,
+  });
   const details = [
     specs.material && `Material: ${specs.material}`,
     specs.construction && `Construction: ${specs.construction}`,
@@ -41,12 +48,8 @@ function mapProduct(item: WordPressProduct, index: number): Product {
 
   return {
     wpId: item.id,
-    image: item.image ? {
-      url: item.image.url,
-      alt: cleanText(item.image.alt) || cleanText(item.title),
-      width: item.image.width,
-      height: item.image.height,
-    } : undefined,
+    image: item.image ? mapImage(item.image) : undefined,
+    gallery: item.gallery?.map(mapImage) || [],
     slug: item.slug,
     name: cleanText(item.title),
     category: (item.categories?.[0]?.name || fallback?.category || "Team Uniforms") as Product["category"],

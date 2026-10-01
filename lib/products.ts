@@ -1,11 +1,14 @@
+export type ProductImage = {
+  url: string;
+  alt: string;
+  width: number;
+  height: number;
+};
+
 export type Product = {
   wpId?: number;
-  image?: {
-    url: string;
-    alt: string;
-    width: number;
-    height: number;
-  };
+  image?: ProductImage;
+  gallery?: ProductImage[];
   slug: string;
   name: string;
   category: "Team Uniforms" | "Training & Apparel" | "Equipment" | "Combat Sports";

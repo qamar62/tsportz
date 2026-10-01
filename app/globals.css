@@ -96,3 +96,4 @@ html[data-theme="dark"] .brand-light .brand-words small{color:var(--teal)}
 .product-card.has-photo:hover .product-photo{transform:scale(1.045)}
 .detail-art.has-photo .detail-art-number,.detail-art.has-photo .detail-art-label{z-index:3;text-shadow:0 2px 12px #000}
 .detail-art.has-photo:hover .detail-photo{transform:scale(1.025)}
+.product-gallery{min-width:0}.detail-thumbnails{display:flex;gap:10px;margin-top:12px;overflow-x:auto;padding:2px 2px 8px;scrollbar-width:thin}.detail-thumbnails button{position:relative;flex:0 0 88px;height:88px;padding:0;border:2px solid transparent;background:#dfe6e1;overflow:hidden;cursor:pointer;transition:border-color .2s,opacity .2s}.detail-thumbnails button:hover{opacity:.82}.detail-thumbnails button.selected{border-color:var(--teal-dark)}.detail-thumbnail-image{object-fit:cover}
