@@ -1,0 +1,8 @@
+import type { Metadata } from "next";
+import { ArrowUpRight, Phone, MessageCircle } from "lucide-react";
+import { ContactForm } from "@/components/contact-form";
+import { getProducts } from "@/lib/wordpress";
+
+export const metadata: Metadata = { title: "Contact", description: "Contact TABEER SPORTZ about uniforms, teamwear and sports equipment." };
+
+export default async function ContactPage() { const products = await getProducts(); return <><section className="page-hero contact-hero"><div className="container page-hero-inner"><span className="eyebrow"><span className="eyebrow-line" /> GET IN TOUCH</span><h1>LET'S TALK<br /><em>SPORT.</em></h1><p>Tell us what your team is looking for. We would love to hear from you.</p></div><span className="page-hero-number">03 / 03</span></section><section className="section contact-section container"><div className="contact-grid"><div className="contact-info"><div className="section-kicker"><span className="tiny-square" /> START A CONVERSATION</div><h2 className="display-heading">EVERY GREAT<br />TEAM STARTS<br /><span>SOMEWHERE.</span></h2><p>Share your product, team and customization needs. We'll continue the conversation directly.</p><div className="contact-methods"><a href="tel:+923353631555"><span className="contact-method-icon"><Phone size={20} /></span><span><small>GIVE US A CALL</small><strong>+92 335 3631555</strong></span><ArrowUpRight size={19} /></a><a href="https://wa.me/923353631555" target="_blank" rel="noopener noreferrer"><span className="contact-method-icon"><MessageCircle size={20} /></span><span><small>CHAT WITH US</small><strong>WhatsApp</strong></span><ArrowUpRight size={19} /></a></div></div><ContactForm products={products} /></div></section></>; }

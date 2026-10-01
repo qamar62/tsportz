@@ -1,0 +1,571 @@
+/**
+ * Crossbar Core - admin styles.
+ *
+ * Scoped to the plugin's own screens. Every rule is anchored to a .cb- class so
+ * nothing here can reach into another plugin's meta box.
+ *
+ * @package Crossbar_Core
+ */
+
+/* -------------------------------------------------------------------------
+ * Meta box chrome
+ *
+ * The header of a meta box is printed by core, outside anything this plugin
+ * renders, so it is reached through the cb-box class the postbox_classes filter
+ * adds. Two things are being fixed here. A section title set at the same weight
+ * as the labels inside it does not read as a title, and four boxes in a row
+ * with identical headers give no clue which one is open — which is the whole
+ * question an editor is asking when they look at that column.
+ * ---------------------------------------------------------------------- */
+
+.cb-box > .postbox-header {
+	border-bottom: 1px solid #e0e3e8;
+}
+
+.cb-box > .postbox-header > .hndle {
+	padding: 13px 14px;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 1.4;
+	color: #1d2327;
+}
+
+/*
+ * Core wraps a meta box title in a span of its own before printing it, so the
+ * icon and the words are two levels down rather than one. Both levels are laid
+ * out here and the gap is a margin rather than flex gap, so the row survives
+ * whichever of them turns out to be the flex parent.
+ */
+.cb-box > .postbox-header > .hndle,
+.cb-box > .postbox-header > .hndle > span {
+	display: flex;
+	align-items: center;
+	min-width: 0;
+}
+
+.cb-box__icon {
+	flex: 0 0 auto;
+	width: 19px;
+	height: 19px;
+	margin-right: 10px;
+	font-size: 19px;
+	line-height: 1;
+	color: #8c8f94;
+}
+
+.cb-box__name {
+	min-width: 0;
+}
+
+/* The open section. A rule down the leading edge and a white header, against
+   the grey of every box that is shut, so the answer to "where am I" is the one
+   thing on the screen that is a different colour. */
+.cb-box:not( .closed ) > .postbox-header {
+	background: #fff;
+	box-shadow: inset 4px 0 0 #2271b1;
+}
+
+.cb-box:not( .closed ) > .postbox-header .cb-box__icon {
+	color: #2271b1;
+}
+
+.cb-box.closed > .postbox-header {
+	background: #f6f7f7;
+}
+
+.cb-box.closed > .postbox-header > .hndle {
+	color: #50575e;
+}
+
+.cb-box.closed > .postbox-header .cb-box__icon {
+	color: #a7aaad;
+}
+
+.cb-box > .inside {
+	margin: 0;
+	padding: 16px 16px 20px;
+}
+
+/* -------------------------------------------------------------------------
+ * Field grid
+ * ---------------------------------------------------------------------- */
+
+.cb-intro {
+	margin: 0 0 16px;
+	padding: 0 0 13px;
+	border-bottom: 1px solid #e0e3e8;
+	color: #50575e;
+	font-size: 13px;
+	line-height: 1.5;
+	max-width: 90ch;
+}
+
+/*
+ * Capped, not fluid. The block editor gives a meta box the full width of the
+ * window, and a two-column grid across a wide monitor produces text boxes an
+ * arm's length across with nothing in them but a size code. The cap is what
+ * turns the extra width into more columns rather than wider ones.
+ */
+.cb-fields {
+	display: grid;
+	grid-template-columns: repeat( 2, minmax( 0, 1fr ) );
+	gap: 18px 26px;
+	align-items: start;
+	max-width: 1180px;
+}
+
+@media screen and ( min-width: 1400px ) {
+
+	.cb-fields {
+		grid-template-columns: repeat( 3, minmax( 0, 1fr ) );
+	}
+}
+
+@media screen and ( max-width: 900px ) {
+
+	.cb-fields {
+		grid-template-columns: minmax( 0, 1fr );
+	}
+}
+
+.cb-field {
+	min-width: 0;
+}
+
+.cb-field--wide,
+.cb-field--full {
+	grid-column: 1 / -1;
+}
+
+.cb-field > label,
+.cb-label {
+	display: block;
+	margin: 0 0 5px;
+	font-weight: 600;
+	font-size: 13px;
+	line-height: 1.4;
+	color: #1d2327;
+}
+
+.cb-hint {
+	display: block;
+	margin: 5px 0 0;
+	color: #646970;
+	font-size: 12px;
+	line-height: 1.5;
+	max-width: 60ch;
+}
+
+.cb-field input[type="text"],
+.cb-field input[type="number"],
+.cb-field input[type="url"],
+.cb-field input[type="email"],
+.cb-field input[type="date"],
+.cb-field select,
+.cb-field textarea {
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
+}
+
+/* A short answer gets a short box. Nothing here is enforcement — the value is
+   still whatever was typed — it is only that the shape of the control should
+   tell the truth about what goes in it. */
+.cb-field--sm input,
+.cb-field--sm select {
+	max-width: 190px;
+}
+
+.cb-field--md input,
+.cb-field--md select {
+	max-width: 420px;
+}
+
+/* A full-width row is full width because its control is multi-line or a list,
+   not because it wants to be 1180 pixels of one-line textarea. */
+.cb-field--wide textarea,
+.cb-field--full textarea,
+.cb-field--wide > input[type="text"],
+.cb-field--full > input[type="text"],
+.cb-field--wide .cb-media,
+.cb-field--full .cb-media {
+	max-width: 860px;
+}
+
+.cb-field textarea {
+	min-height: 74px;
+	line-height: 1.6;
+}
+
+/* Textareas holding pipe/newline rows: monospace so the columns line up and a
+   mistyped separator is visible at a glance. */
+textarea.cb-rows {
+	font-family: Consolas, Monaco, "Courier New", monospace;
+	font-size: 12px;
+	white-space: pre;
+	overflow-x: auto;
+}
+
+/* A field the current price mode makes irrelevant. Dimmed rather than removed,
+   so the layout does not jump while the editor changes their mind. */
+.cb-field.is-muted {
+	opacity: .45;
+}
+
+.cb-field.is-muted input,
+.cb-field.is-muted select {
+	pointer-events: none;
+}
+
+/* -------------------------------------------------------------------------
+ * Checkboxes
+ * ---------------------------------------------------------------------- */
+
+.cb-check {
+	display: inline-flex;
+	align-items: flex-start;
+	gap: 7px;
+	font-size: 13px;
+	line-height: 1.5;
+}
+
+.cb-check input[type="checkbox"] {
+	margin: 2px 0 0;
+	flex: 0 0 auto;
+}
+
+.cb-multi {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px 20px;
+	margin: 2px 0 0;
+}
+
+/* -------------------------------------------------------------------------
+ * Live price preview
+ *
+ * Shows the editor the exact sentence a buyer will read, so a wrong Incoterm or
+ * a missing named place is caught before publish rather than in an email.
+ * ---------------------------------------------------------------------- */
+
+.cb-preview {
+	margin: 18px 0 4px;
+	padding: 12px 14px;
+	background: #f6f7f7;
+	border: 1px solid #dcdcde;
+	border-left: 3px solid #2271b1;
+	border-radius: 0 3px 3px 0;
+	font-size: 13px;
+}
+
+.cb-preview strong {
+	display: block;
+	margin: 0 0 5px;
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: .06em;
+	text-transform: uppercase;
+	color: #646970;
+}
+
+.cb-preview__out {
+	font-size: 16px;
+	line-height: 1.5;
+	color: #1d2327;
+}
+
+.cb-preview__out.is-empty {
+	font-size: 14px;
+	font-style: italic;
+	color: #646970;
+}
+
+/* -------------------------------------------------------------------------
+ * Read-only panels (quote requests)
+ * ---------------------------------------------------------------------- */
+
+.cb-fields--read {
+	margin-top: 16px;
+	padding-top: 14px;
+	border-top: 1px solid #e0e3e8;
+}
+
+.cb-fields--read .cb-label {
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: .05em;
+	text-transform: uppercase;
+	color: #646970;
+	margin-bottom: 2px;
+}
+
+.cb-fields--read .cb-field > span,
+.cb-fields--read .cb-field > a {
+	display: block;
+	font-size: 14px;
+	line-height: 1.5;
+	color: #1d2327;
+	word-break: break-word;
+}
+
+.cb-lines {
+	margin: 18px 0 0;
+}
+
+.cb-lines th,
+.cb-lines td {
+	vertical-align: top;
+}
+
+.cb-lines thead th {
+	font-size: 11px;
+	letter-spacing: .05em;
+	text-transform: uppercase;
+	color: #646970;
+}
+
+.cb-notes {
+	margin: 16px 0 0;
+	padding: 12px 14px;
+	background: #f6f7f7;
+	border: 1px solid #dcdcde;
+	border-radius: 3px;
+	white-space: pre-wrap;
+	font-size: 13px;
+	line-height: 1.6;
+}
+
+/* -------------------------------------------------------------------------
+ * Status pills
+ * ---------------------------------------------------------------------- */
+
+.cb-pill {
+	display: inline-block;
+	padding: 1px 9px;
+	border-radius: 10px;
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 1.8;
+	letter-spacing: .02em;
+	background: #f0f0f1;
+	color: #3c434a;
+	border: 1px solid #dcdcde;
+}
+
+.cb-pill--new {
+	background: #eef4fd;
+	color: #14487f;
+	border-color: #c5d9f1;
+}
+
+.cb-pill--quoted {
+	background: #fdf5e6;
+	color: #7a4b00;
+	border-color: #f0dcb8;
+}
+
+.cb-pill--won {
+	background: #edfaef;
+	color: #14562a;
+	border-color: #c3e6cd;
+}
+
+.cb-pill--lost {
+	background: #fcf0f1;
+	color: #8a2424;
+	border-color: #efc9cb;
+}
+
+.cb-pill--quote {
+	background: #f0f0f1;
+	color: #50575e;
+}
+
+/* -------------------------------------------------------------------------
+ * Importer screen
+ * ---------------------------------------------------------------------- */
+
+.cb-import {
+	max-width: 1060px;
+}
+
+.cb-lede {
+	font-size: 14px;
+	line-height: 1.6;
+	color: #3c434a;
+	max-width: 74ch;
+}
+
+.cb-columns {
+	margin: 12px 0 0;
+}
+
+.cb-columns thead th {
+	font-size: 11px;
+	letter-spacing: .05em;
+	text-transform: uppercase;
+	color: #646970;
+}
+
+.cb-columns td {
+	vertical-align: top;
+}
+
+.cb-columns code {
+	background: #f0f0f1;
+	padding: 1px 5px;
+	border-radius: 2px;
+	font-size: 12px;
+}
+
+.cb-columns em {
+	color: #646970;
+	font-size: 12px;
+}
+
+.cb-import__notes {
+	margin: 8px 0 12px 18px;
+	list-style: disc;
+	font-size: 13px;
+	line-height: 1.6;
+}
+
+.cb-import__notes li {
+	margin: 0 0 3px;
+}
+
+/* -------------------------------------------------------------------------
+ * Media pickers
+ *
+ * The gallery, the spec sheet and the documents. Deliberately close to the
+ * featured-image box and the block editor's own gallery: an editor who has
+ * used WordPress before should not have to work out that this is the same
+ * thing wearing a different coat.
+ * ---------------------------------------------------------------------- */
+
+.cb-media__list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.cb-media__list:empty {
+	display: none;
+}
+
+.cb-media__item {
+	position: relative;
+	width: 92px;
+	padding: 6px 6px 4px;
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	cursor: grab;
+}
+
+.cb-media__item:focus-visible {
+	outline: 2px solid #2271b1;
+	outline-offset: 1px;
+}
+
+/* Held at half opacity rather than hidden, so the gap the tile came from stays
+   visible while it travels and the drop lands where it looked like it would. */
+.cb-media__item.is-dragging {
+	opacity: .45;
+}
+
+.cb-media__item img {
+	display: block;
+	width: 100%;
+	height: 78px;
+	object-fit: cover;
+	border-radius: 2px;
+	background: #f0f0f1;
+	pointer-events: none;
+}
+
+/* A document has no thumbnail worth showing, so it gets its extension in a
+   tile the same size as an image. A row of mixed heights would read as a
+   rendering fault rather than as two kinds of file. */
+.cb-media__doc {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 78px;
+	background: #f0f0f1;
+	border-radius: 2px;
+	color: #50575e;
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: .04em;
+}
+
+.cb-media__name {
+	display: block;
+	margin: 5px 0 0;
+	overflow: hidden;
+	color: #50575e;
+	font-size: 11px;
+	line-height: 1.35;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.cb-media__remove {
+	position: absolute;
+	top: -7px;
+	right: -7px;
+	width: 20px;
+	height: 20px;
+	padding: 0;
+	background: #1d2327;
+	border: 2px solid #fff;
+	border-radius: 50%;
+	color: #fff;
+	font-size: 13px;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.cb-media__remove:hover,
+.cb-media__remove:focus {
+	background: #b32d2e;
+}
+
+.cb-media__empty {
+	margin: 0 0 8px;
+	color: #646970;
+	font-size: 13px;
+	font-style: italic;
+}
+
+.cb-media__actions {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin: 10px 0 0;
+}
+
+.cb-media__clear {
+	color: #b32d2e;
+	font-size: 13px;
+}
+
+/* -------------------------------------------------------------------------
+ * List table columns
+ * ---------------------------------------------------------------------- */
+
+.column-cb_sku,
+.column-cb_moq,
+.column-cb_items {
+	width: 9%;
+}
+
+.column-cb_price,
+.column-cb_country,
+.column-cb_status {
+	width: 12%;
+}
