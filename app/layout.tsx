@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { FloatingChat } from "@/components/floating-chat";
+import { RoutePreloader } from "@/components/route-preloader";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -11,5 +12,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" suppressHydrationWarning><head><script dangerouslySetInnerHTML={{ __html: "try{var theme=localStorage.getItem('tabeer-theme');document.documentElement.dataset.theme=theme==='dark'?'dark':'light'}catch(e){document.documentElement.dataset.theme='light'}" }} /></head><body><Header /><main>{children}</main><Footer /><FloatingChat /></body></html>;
+  return <html lang="en" suppressHydrationWarning><head><script dangerouslySetInnerHTML={{ __html: "try{var theme=localStorage.getItem('tabeer-theme');document.documentElement.dataset.theme=theme==='dark'?'dark':'light'}catch(e){document.documentElement.dataset.theme='light'}" }} /></head><body><RoutePreloader /><Header /><main>{children}</main><Footer /><FloatingChat /></body></html>;
 }

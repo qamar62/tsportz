@@ -80,6 +80,11 @@ html[data-theme="dark"] .footer{background:#0b1312}
 html[data-theme="dark"] .brand-light .brand-words small{color:var(--teal)}
 @media(prefers-reduced-motion:reduce){.floating-chat,.chat-label,.chat-icon,.theme-toggle{transition:none}}
 
+/* Non-blocking feedback for client-side route changes; hidden on first load. */
+.route-preloader{position:fixed;inset:0;z-index:1000;display:grid;place-content:center;justify-items:center;gap:12px;background:#101918b8;backdrop-filter:blur(3px);color:#fff;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s ease,visibility 0s linear .16s}.route-preloader.is-visible{opacity:1;visibility:visible;transition-delay:0s}.route-preloader-line{position:absolute;left:0;top:0;width:100%;height:3px;overflow:hidden;background:#ffffff18}.route-preloader-line::after{content:"";display:block;width:38%;height:100%;background:var(--teal);animation:route-progress .72s ease-in-out infinite}.route-preloader-mark{width:58px;height:58px;display:grid;place-items:center;border:1px solid #ffffff4d;position:relative;transform:rotate(45deg)}.route-preloader-mark::before{content:"";position:absolute;inset:6px;border:2px solid var(--teal);border-left-color:transparent;animation:route-spin .7s linear infinite}.route-preloader-mark span{font-family:'Barlow Condensed',Impact,sans-serif;font-size:20px;font-weight:900;color:var(--teal);transform:rotate(-45deg)}.route-preloader-label{font-size:9px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#d8e7e2}.route-preloader[aria-hidden="true"] .route-preloader-line::after,.route-preloader[aria-hidden="true"] .route-preloader-mark::before{animation-play-state:paused}@keyframes route-spin{to{transform:rotate(360deg)}}@keyframes route-progress{from{transform:translateX(-110%)}to{transform:translateX(300%)}}
+html[data-theme="dark"] .route-preloader{background:#07100fd1}
+@media(prefers-reduced-motion:reduce){.route-preloader{transition:none}.route-preloader-line::after,.route-preloader-mark::before{animation:none}.route-preloader-mark::before{border-color:var(--teal)}}
+
 /* Supplied TABEER SPORTZ mark */
 .brand-logo-shell{display:grid;place-items:center;width:49px;height:49px;flex:0 0 49px;background:#edf8f4;border:1px solid #d8ebe5;overflow:hidden}
 .brand-logo{display:block;width:45px;height:45px;object-fit:contain}
